@@ -1,0 +1,18 @@
+#!meta
+
+{"kernelInfo":{"defaultKernelName":"fsharp","items":[{"name":"fsharp","languageName":"F#","aliases":["f#","F#"]},{"name":".NET","aliases":[]},{"name":"csharp","languageName":"C#","aliases":["c#","C#"]},{"name":"html","languageName":"HTML","aliases":[]},{"name":"kql","languageName":"KQL","aliases":[]},{"name":"mermaid","languageName":"Mermaid","aliases":[]},{"name":"pwsh","languageName":"PowerShell","aliases":["powershell"]},{"name":"sql","languageName":"SQL","aliases":[]},{"name":"value","aliases":[]},{"name":"vscode","aliases":["frontend"]},{"name":"javascript","languageName":"JavaScript","aliases":["js"]},{"name":"webview","aliases":[]}]}}
+
+#!markdown
+
+# Functional FizzBuzz in F#
+
+#!fsharp
+
+// first, define some numbers to Fizzify
+
+let numbers = seq {
+    for x in 1..100 do
+    x
+}
+
+numbers
