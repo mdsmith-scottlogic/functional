@@ -1,6 +1,6 @@
 #!meta
 
-{"kernelInfo":{"defaultKernelName":"fsharp","items":[{"name":"fsharp","languageName":"F#","aliases":["f#","F#"]},{"name":".NET","aliases":[]},{"name":"csharp","languageName":"C#","aliases":["c#","C#"]},{"name":"html","languageName":"HTML","aliases":[]},{"name":"kql","languageName":"KQL","aliases":[]},{"name":"mermaid","languageName":"Mermaid","aliases":[]},{"name":"pwsh","languageName":"PowerShell","aliases":["powershell"]},{"name":"sql","languageName":"SQL","aliases":[]},{"name":"value","aliases":[]},{"name":"vscode","aliases":["frontend"]},{"name":"javascript","languageName":"JavaScript","aliases":["js"]},{"name":"webview","aliases":[]}]}}
+{"kernelInfo":{"defaultKernelName":"fsharp","items":[{"name":"fsharp","languageName":"F#","aliases":["f#","F#"]},{"name":".NET","aliases":[]},{"name":"csharp","languageName":"C#","aliases":["c#","C#"]},{"name":"html","languageName":"HTML","aliases":[]},{"name":"kql","languageName":"KQL","aliases":[]},{"name":"mermaid","languageName":"Mermaid","aliases":[]},{"name":"pwsh","languageName":"PowerShell","aliases":["powershell"]},{"name":"sql","languageName":"SQL","aliases":[]},{"name":"value","aliases":[]},{"name":"vscode","aliases":["frontend"],"languageName":null},{"name":"javascript","languageName":"JavaScript","aliases":["js"]},{"name":"webview","aliases":[]}]}}
 
 #!markdown
 
@@ -10,9 +10,26 @@
 
 // first, define some numbers to Fizzify
 
+let some_numbers = seq {
+    for x in 1..100 do
+        x
+}
+
+some_numbers
+
+#!markdown
+
+OK, so that worked, and `seq` gives you an IEnumerable without allocating elements until you enumerate them. Can we generate something to tell us if the numbers are div 3 or div 5? 
+
+#!fsharp
+
 let numbers = seq {
     for x in 1..100 do
-    x
+        (x, x % 3 = 0, x % 5 = 0)
 }
 
 numbers
+
+#!markdown
+
+Now we have a sequence of tuples of type `(int, bool, bool)` that follows the expected pattern. `numbers` isn't a great name though :-)
