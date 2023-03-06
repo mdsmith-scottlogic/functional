@@ -1,10 +1,12 @@
 #!meta
 
-{"kernelInfo":{"defaultKernelName":"fsharp","items":[{"name":"fsharp","languageName":"F#","aliases":["f#","F#"]},{"name":".NET","aliases":[]},{"name":"csharp","languageName":"C#","aliases":["c#","C#"]},{"name":"html","languageName":"HTML","aliases":[]},{"name":"kql","languageName":"KQL","aliases":[]},{"name":"mermaid","languageName":"Mermaid","aliases":[]},{"name":"pwsh","languageName":"PowerShell","aliases":["powershell"]},{"name":"sql","languageName":"SQL","aliases":[]},{"name":"value","aliases":[]},{"name":"vscode","aliases":["frontend"],"languageName":null},{"name":"javascript","languageName":"JavaScript","aliases":["js"]},{"name":"webview","aliases":[]}]}}
+{"kernelInfo":{"defaultKernelName":"fsharp","items":[{"name":"fsharp","languageName":"F#","aliases":["f#","F#"]},{"name":".NET","aliases":[],"languageName":null},{"name":"csharp","languageName":"C#","aliases":["c#","C#"]},{"name":"html","languageName":"HTML","aliases":[]},{"name":"kql","languageName":"KQL","aliases":[]},{"name":"mermaid","languageName":"Mermaid","aliases":[]},{"name":"pwsh","languageName":"PowerShell","aliases":["powershell"]},{"name":"sql","languageName":"SQL","aliases":[]},{"name":"value","aliases":[],"languageName":null},{"name":"vscode","aliases":["frontend"],"languageName":null},{"name":"javascript","languageName":"JavaScript","aliases":["js"]},{"name":"webview","aliases":[]}]}}
 
 #!markdown
 
 # Functional FizzBuzz in F#
+
+This is a document of my experiments rather than a clear tutorial, some bits are experiments, other bits forma slightly clearer narrative.
 
 #!fsharp
 
@@ -15,6 +17,12 @@ let some_numbers = seq {
         x
 }
 
+#!markdown
+
+We can see what we've got in `some_numbers` by evaluating it in a code block here in this workbook:
+
+#!fsharp
+
 some_numbers
 
 #!markdown
@@ -23,13 +31,58 @@ OK, so that worked, and `seq` gives you an IEnumerable without allocating elemen
 
 #!fsharp
 
-let numbers = seq {
+let values = seq {
     for x in 1..100 do
         (x, x % 3 = 0, x % 5 = 0)
 }
 
-numbers
+#!markdown
+
+Now we have a sequence of tuples of type `(int, bool, bool)` where number is the value, and booleans that represent whether that number is divisible by 3, or by 5 (or both).
+
+Can we write function that takes one of these tuples and turns it into the expected Fizz Buzz result?
+
+#!fsharp
+
+let FizzBuzz x = 
+    match x with
+    | (_, true, true) -> "FizBuzz"
+    | (_, true, false) -> "Fizz"
+    | (_, false, true) -> "Fizz"
+    | (n, _, _) -> $"{n}"
 
 #!markdown
 
-Now we have a sequence of tuples of type `(int, bool, bool)` that follows the expected pattern. `numbers` isn't a great name though :-)
+Looks reasonable. The signature of this function is (int, bool, bool) -> string, and it works by matching each (int, bool, bool) with the four cases shown. The underscore indicates 'don't care about this value'. F# enforces coverage of all the cases for matching. Which is nice.
+
+Does it work?
+
+#!fsharp
+
+let fbValues = Seq.map FizzBuzz values
+
+fbValues
+
+#!markdown
+
+Well, that seems to work, though the formatting could use some love:
+
+#!fsharp
+
+fbValues |> Seq.iter (printfn "%s")
+
+#!markdown
+
+That works and all, but all those intermediate values are a bit ugly. Can we do something a bit more functional/f#-looking? Perhaps get rid of some intermediate values?
+
+#!fsharp
+
+values 
+|> Seq.map FizzBuzz
+|> Seq.iter (printfn "%s")
+
+#!markdown
+
+Yes. The `|>` operator sends the preceding thing to the following thing. When `Seq.map` receives the values, it passes them to `FizzBuzz` one tuple at a time, returning another sequence. We then take this sequence and pipe it on to `Seq.iter` which iterates over a sequence, calling the provided function (in this case `printfn "%s"` to print a formatted string) one at a time.
+
+There might be better ways to do this, but I'm content for now!
