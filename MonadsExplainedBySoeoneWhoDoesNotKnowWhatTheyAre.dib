@@ -1,0 +1,19 @@
+#!meta
+
+{"kernelInfo":{"defaultKernelName":"csharp","items":[{"name":"csharp","aliases":["c#","C#"],"languageName":"C#"},{"name":"vscode","languageName":null,"aliases":["frontend"]}]}}
+
+#!markdown
+
+# Monads Explained By Someone Who Does Not Know What They Are
+
+Douglas Crockford, famous software dude said:
+
+> The monadic curse is that once someone learns what monads are and how to use them, they lose the ability to explain them to other people
+
+I have a cunning plan to explain monads before I learn what they are, thus avoiding the monadic curse! 
+
+Using a language like F# might be cheating, so I'm going to do it in C#.
+
+#!csharp
+
+Console.WriteLine("So, smarty-pants, why bother explaining monads?")
