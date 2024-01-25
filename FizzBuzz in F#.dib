@@ -1,6 +1,6 @@
 #!meta
 
-{"kernelInfo":{"defaultKernelName":"fsharp","items":[{"aliases":[],"name":".NET"},{"aliases":["C#","c#"],"languageName":"C#","name":"csharp"},{"aliases":["F#","f#"],"languageName":"F#","name":"fsharp"},{"aliases":[],"languageName":"HTML","name":"html"},{"aliases":["js"],"languageName":"JavaScript","name":"javascript"},{"aliases":[],"languageName":"KQL","name":"kql"},{"aliases":[],"languageName":"Mermaid","name":"mermaid"},{"aliases":["powershell"],"languageName":"PowerShell","name":"pwsh"},{"aliases":[],"languageName":"SQL","name":"sql"},{"aliases":[],"name":"value"},{"aliases":["frontend"],"name":"vscode"},{"aliases":[],"name":"webview"}]}}
+{"kernelInfo":{"defaultKernelName":"csharp","items":[{"aliases":[],"name":".NET"},{"aliases":["C#","c#"],"languageName":"C#","name":"csharp"},{"aliases":["F#","f#"],"languageName":"F#","name":"fsharp"},{"aliases":[],"languageName":"HTML","name":"html"},{"aliases":["js"],"languageName":"JavaScript","name":"javascript"},{"aliases":[],"languageName":"KQL","name":"kql"},{"aliases":[],"languageName":"Mermaid","name":"mermaid"},{"aliases":["powershell"],"languageName":"PowerShell","name":"pwsh"},{"aliases":[],"languageName":"SQL","name":"sql"},{"aliases":[],"name":"value"},{"aliases":["frontend"],"name":"vscode"},{"aliases":[],"name":"webview"}]}}
 
 #!markdown
 
@@ -12,7 +12,7 @@ This is a document of my experiments rather than a clear tutorial, some bits are
 
 // first, define some numbers to Fizzify
 
-let some_numbers max = seq {
+let numbers_to max = seq {
     for x in 1..max do
       yield  x
 }
@@ -23,7 +23,7 @@ We can see what we've got in `some_numbers` by evaluating it in a code block her
 
 #!fsharp
 
-some_numbers 100
+numbers_to 100
 
 #!markdown
 
@@ -59,7 +59,7 @@ Does it work?
 
 #!fsharp
 
-let n = some_numbers 100
+let n = numbers_to 100
 let v = values n
 let fbValues = Seq.map FizzBuzz v
 
@@ -79,9 +79,7 @@ That works and all, but all those intermediate values are a bit ugly. Can we do 
 
 #!fsharp
 
-values 
-25
-|> some_numbers
+numbers_to 25
 |> values
 |> Seq.map FizzBuzz
 |> Seq.iter (printfn "%s")
