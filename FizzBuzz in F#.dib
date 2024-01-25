@@ -12,8 +12,8 @@ This is a document of my experiments rather than a clear tutorial, some bits are
 
 // first, define some numbers to Fizzify
 
-let some_numbers = seq {
-    for x in 1..100 do
+let some_numbers max = seq {
+    for x in 1..max do
       yield  x
 }
 
@@ -23,7 +23,7 @@ We can see what we've got in `some_numbers` by evaluating it in a code block her
 
 #!fsharp
 
-some_numbers
+some_numbers 100
 
 #!markdown
 
@@ -31,8 +31,8 @@ OK, so that worked, and `seq` gives you an IEnumerable without allocating elemen
 
 #!fsharp
 
-let values = seq {
-    for x in 1..100 do
+let values numbers = seq {
+    for x in numbers do
       yield (x, x % 3 = 0, x % 5 = 0)
 }
 
@@ -59,7 +59,9 @@ Does it work?
 
 #!fsharp
 
-let fbValues = Seq.map FizzBuzz values
+let n = some_numbers 100
+let v = values n
+let fbValues = Seq.map FizzBuzz v
 
 fbValues
 
@@ -78,6 +80,9 @@ That works and all, but all those intermediate values are a bit ugly. Can we do 
 #!fsharp
 
 values 
+25
+|> some_numbers
+|> values
 |> Seq.map FizzBuzz
 |> Seq.iter (printfn "%s")
 
